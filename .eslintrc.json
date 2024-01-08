@@ -16,6 +16,7 @@
     ],
     "rules": {
       "react/jsx-no-target-blank": 0,
-      "react/react-in-jsx-scope": 0
+      "react/react-in-jsx-scope": 0,
+      "react/prop-types": 0
     }
 }

@@ -1,0 +1,36 @@
+.hint::after{
+  --hint-size: 30px;
+  width: var(--hint-size);
+  height: var(--hint-size);
+  content: '';
+  background-color: #997777b3;
+  border-radius: 50%;
+  position: relative;
+  top: -100%;
+  transform: translate(0%, -100%);
+}
+
+.cell{
+  width: var(--cell-size);
+  height: var(--cell-size);
+  display: grid;
+  justify-items: center
+}
+
+.black{
+  background-color: rgb(126 152 92);
+}
+
+.white{
+ background-color: rgb(234 237 207);
+}
+
+.board{
+  --cell-size: 80px;
+  display: grid;
+  grid-template-columns: repeat(8, var(--cell-size));
+}
+
+.selected {
+  background-color: rgb(191, 203, 95);
+}
