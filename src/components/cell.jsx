@@ -6,10 +6,9 @@ function Cell ({ index, hint, piece, selectPiece, selectedPiece }) {
   const column = index % 8
   const cellColor = (row + column) % 2 === 0 ? 'white' : 'black'
 
-  const handleClick = () => selectPiece(index)
+  const handleClick = async () => await selectPiece(index)
 
   useEffect(() => {
-    console.log('xxxx')
     if (selectedPiece === index) return setSelected('selected')
     return setSelected('')
   }, [selectedPiece])

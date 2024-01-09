@@ -6,8 +6,7 @@
   background-color: #997777b3;
   border-radius: 50%;
   position: relative;
-  top: -100%;
-  transform: translate(0%, -100%);
+  top: 30%;
 }
 
 .cell{
