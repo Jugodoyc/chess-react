@@ -1,25 +1,33 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import Cell from './components/cell.jsx'
+import GameButton from './components/gameButton.jsx'
 
 const ENDPOINT = 'http://localhost:3000'
-const GAME_ID = '6392f76d-1ab4-476e-af17-25c4aeaf929b'
 
 function App () {
   const [board, setBoard] = useState([])
   const [games, setGames] = useState([])
-  const [selected, setSelected] = useState(null)
   const [hints, setHints] = useState([])
+  const [gameId, setGameId] = useState(null)
+  const [selected, setSelected] = useState(null)
+
   useEffect(() => {
-    fetch(`${ENDPOINT}/game/${GAME_ID}`).then(res => res.json()).then(data => setBoard(data.board))
-    fetch(`${ENDPOINT}/games`).then(res => res.json()).then(data => setGames(data))
+    getGames()
+    fetch(`${ENDPOINT}/games`)
+      .then(res => res.json())
+      .then(data => fetch(`${ENDPOINT}/game/${data[0]}`)
+        .then(res => res.json())
+        .then(data2 => setBoard(data2.board)))
   }, [])
+
   const getHints = async (index) => {
     if (!index) return
-    const res = await fetch(`${ENDPOINT}/game/${GAME_ID}/hints/${index}`)
+    const res = await fetch(`${ENDPOINT}/game/${gameId}/hints/${index}`)
     const data = await res.json()
     setHints(data.hints)
   }
+
   const selectPiece = async index => {
     if (selected === index) {
       setHints([])
@@ -37,7 +45,7 @@ function App () {
         const customHeaders = {
           'Content-Type': 'application/json'
         }
-        const res = await fetch(`${ENDPOINT}/game/${GAME_ID}/move`, { method: 'POST', body: JSON.stringify(body), headers: customHeaders })
+        const res = await fetch(`${ENDPOINT}/game/${gameId}/move`, { method: 'POST', body: JSON.stringify(body), headers: customHeaders })
         const data = await res.json()
         setBoard(data.board)
       }
@@ -46,19 +54,39 @@ function App () {
     }
   }
 
+  const getGames = () => fetch(`${ENDPOINT}/games`).then(res => res.json()).then(data => setGames(data))
+
+  const changeGame = name => {
+    fetch(`${ENDPOINT}/game/${name}`).then(res => res.json()).then(data => setBoard(data.board))
+    setGameId(name)
+  }
+
+  const newGame = () => {
+    fetch(`${ENDPOINT}/game`, { method: 'POST' }).then(res => res.json()).then(data => {
+      setBoard(data.board)
+      setGameId(data.id)
+      getGames()
+    })
+  }
+
   return (
     <>
-    <div className='board'>
-      {
-        board.map((cell, index) => {
-          const hint = hints.includes(index)
-          return <Cell key={index} index={index} hint={hint} piece={cell.piece} selectPiece={selectPiece} selectedPiece={selected}></Cell>
-        })
-      }
+    <div className='screen'>
+      <div className='board'>
+        {
+          board.map((cell, index) => {
+            const hint = hints.includes(index)
+            return <Cell key={index} index={index} hint={hint} piece={cell.piece} selectPiece={selectPiece} selectedPiece={selected}></Cell>
+          })
+        }
+      </div>
+      <div className='buttonMap'>
+        {
+          games.map(game => <GameButton key={game} name={game} changeGame={changeGame}></GameButton>)
+        }
+        <GameButton name='New Game' changeGame={newGame}></GameButton>
+      </div>
     </div>
-    {
-      games.map(game => <div key={game}>{game}</div>)
-    }
     </>
   )
 }

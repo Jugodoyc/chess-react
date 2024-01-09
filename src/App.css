@@ -33,3 +33,33 @@
 .selected {
   background-color: rgb(191, 203, 95);
 }
+
+.gameButton{
+  background-color: rgb(126 152 92);
+  border-radius: 10px;
+  width: 400px;
+  height: 40px;
+  position: relative;
+  text-align: center;
+  margin: 10px;
+  color: white;
+}
+
+.gameButton:hover{
+  background-color: rgb(234 237 207);
+  color: black;
+  cursor: pointer;
+}
+
+.screen{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+body{
+  background-color: #302E2B;
+}
+
+.hand{
+  cursor: -webkit-grab;
+}

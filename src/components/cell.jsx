@@ -15,7 +15,7 @@ function Cell ({ index, hint, piece, selectPiece, selectedPiece }) {
 
   return (
     <>
-      <div className={`cell ${cellColor} ${selected} ${hint ? 'hint' : ''}`} onClick={handleClick}>
+      <div className={`cell ${(piece || hint) && 'hand'} ${cellColor} ${selected} ${hint ? 'hint' : ''}`} onClick={handleClick}>
         {piece && <img src={`https://images.chesscomfiles.com/chess-themes/pieces/neo/80/${piece}.png`} />}
       </div>
     </>
