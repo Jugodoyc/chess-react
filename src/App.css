@@ -1,12 +1,23 @@
 .hint::after{
-  --hint-size: 30px;
+  --hint-size: 40px;
   width: var(--hint-size);
   height: var(--hint-size);
   content: '';
   background-color: #997777b3;
   border-radius: 50%;
   position: relative;
-  top: 30%;
+  top: 25%;
+}
+
+.capture{
+  --cell-size: 60px;
+  width: var(--cell-size);
+  height: var(--cell-size);
+  content: '';
+  border: 10px solid #997777b3;
+  border-radius: 50%;
+  position: relative;
+  top: -100%;
 }
 
 .cell{
@@ -26,6 +37,7 @@
 
 .board{
   --cell-size: 80px;
+  max-height: 6400px;
   display: grid;
   grid-template-columns: repeat(8, var(--cell-size));
 }
